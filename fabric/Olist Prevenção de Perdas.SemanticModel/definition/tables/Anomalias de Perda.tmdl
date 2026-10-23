@@ -1,0 +1,250 @@
+/// Uma linha por anomalia de perda: monitor + segmento + semana em que a taxa saiu do padrão das 8 semanas anteriores. Traz impacto em BRL, prioridade, responsável e hipótese de causa gerada por IA.
+table 'Anomalias de Perda'
+
+	/// Quantidade de anomalias de perda detectadas (monitor + segmento + semana). Sinônimos: alertas, desvios, ocorrências fora do padrão.
+	measure 'Qtd Anomalias' = COUNTROWS ( 'Anomalias de Perda' )
+		formatString: #,0
+		displayFolder: 05 Anomalias
+
+	/// Anomalias com prioridade Alta (impacto estimado de R$ 5 mil ou mais na semana). Use para "anomalias críticas" ou "alertas urgentes".
+	measure 'Anomalias de Alta Prioridade' =
+			CALCULATE (
+			    [Qtd Anomalias],
+			    KEEPFILTERS ( 'Anomalias de Perda'[Prioridade] = "Alta" )
+			)
+		formatString: #,0
+		displayFolder: 05 Anomalias
+
+	/// Anomalias com status Nova: o segmento não estava em anomalia no mesmo monitor na semana anterior. Recorrentes ficam de fora.
+	measure 'Anomalias Novas' =
+			CALCULATE (
+			    [Qtd Anomalias],
+			    KEEPFILTERS ( 'Anomalias de Perda'[Status da Anomalia] = "Nova" )
+			)
+		formatString: #,0
+		displayFolder: 05 Anomalias
+
+	/// Perda acima do padrão somada nas anomalias, em BRL: (taxa observada - linha de base) x valor bruto da semana. Estimativa, não perda contábil.
+	measure 'Impacto Estimado das Anomalias' = SUM ( 'Anomalias de Perda'[Valor do Impacto Estimado] )
+		formatString: \R$ #,0.00;-\R$ #,0.00;\R$ 0.00
+		displayFolder: 05 Anomalias
+
+	/// Média simples (não ponderada por volume) de quantas vezes a taxa ficou acima da linha de base. Ignora anomalias com linha de base zero.
+	measure 'Fator Médio sobre o Padrão' = AVERAGE ( 'Anomalias de Perda'[Fator sobre o Padrão] )
+		formatString: 0.0x
+		displayFolder: 05 Anomalias
+
+	/// Parcela das anomalias que já têm hipótese de causa e ação recomendada geradas por IA (status Gerada).
+	measure '% Anomalias com Hipótese' =
+			DIVIDE (
+			    CALCULATE ( [Qtd Anomalias], KEEPFILTERS ( 'Anomalias de Perda'[Status da Hipótese] = "Gerada" ) ),
+			    [Qtd Anomalias]
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 05 Anomalias
+
+	/// Semana mais recente com anomalia no contexto do filtro (data de início, segunda-feira).
+	measure 'Última Semana com Anomalia' = MAX ( 'Anomalias de Perda'[Semana] )
+		formatString: dd/MM/yyyy
+		displayFolder: 05 Anomalias
+
+	/// Código determinístico da anomalia (hash de monitor + segmento + semana). Use para citar ou localizar uma anomalia específica.
+	column 'Código da Anomalia'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: anomaly_id
+
+	column 'Código do Monitor'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: monitor_code
+
+	/// Regra que detectou a anomalia: Receita perdida por categoria, Atraso de entrega por UF do cliente ou Atraso de entrega por vendedor.
+	column Monitor
+		dataType: string
+		summarizeBy: none
+		sourceColumn: monitor_name
+		sortByColumn: 'Código do Monitor'
+
+	/// Tipo de perda: Venda perdida (pedidos cancelados ou indisponíveis) ou Atraso de entrega (entregue depois da data prevista).
+	column 'Tipo de Perda'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: loss_type_name
+
+	/// Dimensão em que o monitor procura desvios: Categoria, UF do Cliente ou Vendedor. Diz como ler a coluna Segmento.
+	column Dimensão
+		dataType: string
+		summarizeBy: none
+		sourceColumn: dimension_name
+
+	column 'Código do Segmento'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: segment_code
+
+	/// Membro da dimensão em anomalia: nome da categoria, sigla da UF do cliente ou 'Vendedor' + 8 primeiros caracteres do código. Não filtra Produto, Cliente nem Vendedor.
+	column Segmento
+		dataType: string
+		summarizeBy: none
+		sourceColumn: segment_name
+
+	column week_start_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: week_start_date_key
+
+	/// Segunda-feira que inicia a semana analisada. Venda perdida usa a data da compra; atraso usa a data da entrega ao cliente.
+	column Semana
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		summarizeBy: none
+		sourceColumn: week_start_date
+
+	/// Itens avaliados no segmento e semana: todos os itens vendidos (venda perdida) ou os itens entregues (atraso).
+	column 'Itens na Semana'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: none
+		sourceColumn: item_count
+
+	/// Itens com o evento de perda: itens de pedidos perdidos ou itens entregues com atraso.
+	column 'Itens com Perda'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: none
+		sourceColumn: hit_count
+
+	/// Taxa de perda da semana: % da receita bruta perdida (venda perdida) ou % dos itens entregues com atraso.
+	column 'Taxa Observada'
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		summarizeBy: none
+		sourceColumn: observed_rate
+
+	/// Mediana da mesma taxa nas 8 semanas anteriores do segmento: o padrão contra o qual a semana é comparada.
+	column 'Linha de Base'
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		summarizeBy: none
+		sourceColumn: baseline_rate
+
+	/// Taxa observada dividida pela linha de base (ex.: 5,3x). Vazio quando a linha de base é zero.
+	column 'Fator sobre o Padrão'
+		dataType: double
+		formatString: 0.0x
+		summarizeBy: none
+		sourceColumn: rate_factor
+
+	/// Escore robusto: distância da taxa observada à mediana, em desvios absolutos medianos (MAD). Anomalia a partir de 3,5.
+	column 'Escore Robusto'
+		dataType: double
+		formatString: 0.0
+		summarizeBy: none
+		sourceColumn: robust_z
+
+	column 'Valor do Impacto Estimado'
+		dataType: decimal
+		isHidden
+		formatString: \R$ #,0.00;-\R$ #,0.00;\R$ 0.00
+		summarizeBy: none
+		sourceColumn: impact_amount
+
+	/// Prioridade pelo impacto estimado na semana: Alta (R$ 5 mil ou mais), Média (R$ 2 mil a 5 mil) ou Baixa.
+	column Prioridade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: priority_name
+		sortByColumn: 'Ordem da Prioridade'
+
+	column 'Ordem da Prioridade'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: priority_rank
+
+	/// Sinal mais forte nas evidências, calculado por regra (sem IA), ex.: Postagem do vendedor fora do prazo, Concentrado em um vendedor.
+	column 'Sinal Principal'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: main_signal_name
+
+	/// Fatos que sustentam a hipótese: volume, taxa x padrão, atraso médio, concentração por vendedor, UF e categoria, nota da avaliação.
+	column Evidências
+		dataType: string
+		summarizeBy: none
+		sourceColumn: evidence_text
+
+	/// Causa provável gerada por IA a partir das evidências. É hipótese a validar pelo responsável, não causa confirmada.
+	column 'Hipótese de Causa'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ai_hypothesis_text
+
+	/// Ação recomendada gerada por IA para o responsável, coerente com a hipótese e o sinal principal.
+	column 'Ação Recomendada'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ai_action_text
+
+	/// Confiança declarada pela IA na hipótese: Alta, Média ou Baixa, conforme a força das evidências.
+	column 'Confiança da Hipótese'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ai_confidence_name
+
+	/// Gerada (IA respondeu no formato esperado), Regra (IA indisponível ou resposta inválida; texto montado pelo sinal principal) ou Pendente.
+	column 'Status da Hipótese'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ai_status_code
+
+	/// Área dona da ação: Comercial (categoria), Logística da região do cliente (UF) ou Gestão de Sellers (vendedor).
+	column 'Área Responsável'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: owner_area_name
+
+	/// Pessoa ou caixa responsável por tratar a anomalia.
+	column Responsável
+		dataType: string
+		summarizeBy: none
+		sourceColumn: owner_name
+
+	column 'E-mail do Responsável'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: owner_email
+
+	/// Nova (primeira semana em anomalia) ou Recorrente (o segmento já estava em anomalia na semana anterior, no mesmo monitor).
+	column 'Status da Anomalia'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: alert_status_name
+
+	column 'Pendente de Alerta'
+		dataType: boolean
+		isHidden
+		summarizeBy: none
+		sourceColumn: is_alert_pending
+
+	/// Data e hora (UTC) da primeira detecção da anomalia pelo pipeline.
+	column 'Detectada em'
+		dataType: dateTime
+		formatString: dd/MM/yyyy HH:mm
+		summarizeBy: none
+		sourceColumn: detected_ts
+
+	partition 'Anomalias de Perda' = entity
+		mode: directLake
+		source
+			entityName: fact_loss_anomaly
+			schemaName: loss
+			expressionSource: OneLake_AI
+

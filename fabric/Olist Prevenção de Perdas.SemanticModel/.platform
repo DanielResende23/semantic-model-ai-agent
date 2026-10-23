@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Olist Prevenção de Perdas",
+    "description": "Modelo Direct Lake AI-ready sobre o lh_ai: vendas e perdas do e-commerce Olist mais as anomalias de perda detectadas, com hipótese de causa e ação recomendada geradas por IA."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "99813605-45d3-405d-a1f2-904d0ceb87a8"
+  }
+}

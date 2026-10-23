@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "an0000000000000card2",
+  "position": {
+    "x": 504,
+    "y": 144,
+    "width": 444,
+    "height": 150,
+    "z": 1010,
+    "tabOrder": 1010
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Anomalias de Alta Prioridade"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Anomalias de Alta Prioridade",
+              "nativeQueryRef": "Anomalias de Alta Prioridade"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "30D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_refresh_semantic_model",
+    "description": "Rebind do modelo para o lh_ai do workspace e framing Direct Lake."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e52e58ad-1a5b-4a34-b92b-4f5818b6bd54"
+  }
+}

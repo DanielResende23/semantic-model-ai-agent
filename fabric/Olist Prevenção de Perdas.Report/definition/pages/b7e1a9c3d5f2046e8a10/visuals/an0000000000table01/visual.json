@@ -1,0 +1,267 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "an0000000000table01",
+  "position": {
+    "x": 40,
+    "y": 662,
+    "width": 1840,
+    "height": 378,
+    "z": 4000,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Semana"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Semana",
+              "nativeQueryRef": "Semana"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Monitor"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Monitor",
+              "nativeQueryRef": "Monitor"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Segmento"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Segmento",
+              "nativeQueryRef": "Segmento"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Prioridade"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Prioridade",
+              "nativeQueryRef": "Prioridade"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Impacto Estimado das Anomalias"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Impacto Estimado das Anomalias",
+              "nativeQueryRef": "Impacto Estimado das Anomalias"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Taxa Observada"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Taxa Observada",
+              "nativeQueryRef": "Taxa Observada"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Linha de Base"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Linha de Base",
+              "nativeQueryRef": "Linha de Base"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Sinal Principal"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Sinal Principal",
+              "nativeQueryRef": "Sinal Principal"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Hipótese de Causa"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Hipótese de Causa",
+              "nativeQueryRef": "Hipótese de Causa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Ação Recomendada"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Ação Recomendada",
+              "nativeQueryRef": "Ação Recomendada"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Responsável"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Responsável",
+              "nativeQueryRef": "Responsável"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Anomalias de Perda"
+                    }
+                  },
+                  "Property": "Status da Anomalia"
+                }
+              },
+              "queryRef": "Anomalias de Perda.Status da Anomalia",
+              "nativeQueryRef": "Status da Anomalia"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Anomalias de Perda"
+                  }
+                },
+                "Property": "Semana"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Fila de anomalias: o que aconteceu, por que provavelmente aconteceu e quem age'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Mais recentes primeiro; hipótese e ação recomendada geradas por IA a partir das evidências'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

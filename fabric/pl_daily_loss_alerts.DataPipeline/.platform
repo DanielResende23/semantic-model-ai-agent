@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_daily_loss_alerts",
+    "description": "Detecta anomalias de perda, gera hipóteses com IA e atualiza o modelo semântico; o alerta sai pelo Power Automate."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20df86f6-60bb-4eec-bc34-a44b2eaa8f3c"
+  }
+}

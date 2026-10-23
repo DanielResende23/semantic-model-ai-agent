@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_setup_data_agent",
+    "description": "Cria, configura e publica o Fabric Data Agent da_prevencao_perdas pelo SDK."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7580c7ae-6d3d-45ca-88f4-d676daf87e0e"
+  }
+}

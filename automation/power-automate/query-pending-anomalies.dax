@@ -1,0 +1,42 @@
+// Consulta do fluxo "Alerta de anomalia de perda" (ação Run a query against a dataset).
+// Só anomalias pendentes de alerta do último lote, prioridade Alta ou Média, detectadas nas últimas 24 h:
+// a janela de tempo evita reenvio se o pipeline não rodar num dia e o fluxo rodar mesmo assim.
+DEFINE
+    VAR Pendentes =
+        CALCULATETABLE (
+            'Anomalias de Perda',
+            'Anomalias de Perda'[Pendente de Alerta] = TRUE (),
+            'Anomalias de Perda'[Prioridade] IN { "Alta", "Média" },
+            'Anomalias de Perda'[Detectada em] >= NOW () - 1
+        )
+EVALUATE
+SELECTCOLUMNS (
+    Pendentes,
+    "Anomalia", 'Anomalias de Perda'[Código da Anomalia],
+    "Monitor", 'Anomalias de Perda'[Monitor],
+    "TipoPerda", 'Anomalias de Perda'[Tipo de Perda],
+    "Dimensao", 'Anomalias de Perda'[Dimensão],
+    "Segmento", 'Anomalias de Perda'[Segmento],
+    "Semana", FORMAT ( 'Anomalias de Perda'[Semana], "dd/MM/yyyy" ),
+    "TaxaObservada", FORMAT ( 'Anomalias de Perda'[Taxa Observada], "0.0%" ),
+    "LinhaBase", FORMAT ( 'Anomalias de Perda'[Linha de Base], "0.0%" ),
+    "Fator", IF (
+        ISBLANK ( 'Anomalias de Perda'[Fator sobre o Padrão] ),
+        "sem perda no padrão",
+        FORMAT ( 'Anomalias de Perda'[Fator sobre o Padrão], "0.0" ) & "x o padrão"
+    ),
+    "Impacto", FORMAT ( 'Anomalias de Perda'[Valor do Impacto Estimado], "\R$ #,0" ),
+    "ImpactoValor", 'Anomalias de Perda'[Valor do Impacto Estimado],
+    "Prioridade", 'Anomalias de Perda'[Prioridade],
+    "OrdemPrioridade", 'Anomalias de Perda'[Ordem da Prioridade],
+    "Status", 'Anomalias de Perda'[Status da Anomalia],
+    "SinalPrincipal", 'Anomalias de Perda'[Sinal Principal],
+    "Evidencias", 'Anomalias de Perda'[Evidências],
+    "Hipotese", 'Anomalias de Perda'[Hipótese de Causa],
+    "Acao", 'Anomalias de Perda'[Ação Recomendada],
+    "Confianca", 'Anomalias de Perda'[Confiança da Hipótese],
+    "OrigemHipotese", 'Anomalias de Perda'[Status da Hipótese],
+    "Responsavel", 'Anomalias de Perda'[Responsável],
+    "EmailResponsavel", 'Anomalias de Perda'[E-mail do Responsável]
+)
+ORDER BY [OrdemPrioridade], [ImpactoValor] DESC

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_setup_shortcuts",
+    "description": "Cria os schema shortcuts do lh_ai para o lh_gold e o lh_silver do workspace de origem."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7c9d62f5-57b6-47b8-ae85-b96ddfc8bd84"
+  }
+}

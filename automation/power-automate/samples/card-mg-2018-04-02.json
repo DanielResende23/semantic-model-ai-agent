@@ -1,0 +1,142 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "Container",
+      "style": "attention",
+      "bleed": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Anomalia de perda · prioridade Alta",
+          "weight": "Bolder",
+          "size": "Medium",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Atraso de entrega por UF do cliente · MG · semana de 02/04/2018 · Recorrente",
+          "spacing": "None",
+          "isSubtle": true,
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Taxa na semana",
+              "isSubtle": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "24,9%",
+              "size": "ExtraLarge",
+              "weight": "Bolder",
+              "color": "Attention",
+              "spacing": "None"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Padrão (8 semanas)",
+              "isSubtle": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "3,9%",
+              "size": "ExtraLarge",
+              "weight": "Bolder",
+              "spacing": "None"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Impacto estimado",
+              "isSubtle": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "R$ 11.249",
+              "size": "ExtraLarge",
+              "weight": "Bolder",
+              "spacing": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "6,3x o padrão · sinal principal: **Atraso no transporte**",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Hipótese provável (IA, confiança Média)",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Provável gargalo no transporte até MG: só 24,7% dos itens atrasados saíram do vendedor fora do prazo, mas o atraso médio chegou a 8,1 dias, e 76,5% dos atrasos vieram de vendedores de SP.",
+      "wrap": true,
+      "spacing": "None"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Ação recomendada",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Abrir chamado com as transportadoras das rotas SP → MG, conferir os rastreios da semana de 02/04 e, se o gargalo se confirmar, ampliar o prazo prometido para MG; acionar o vendedor 88460e8e, que concentra 10,6% dos atrasos.",
+      "wrap": true,
+      "spacing": "None"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Evidências: 85 de 342 itens entregues com atraso (24,9% contra 3,9% nas 8 semanas anteriores, 6,3x o padrão); atraso médio de 8,1 dias. 24,7% dos itens atrasados foram postados pelo vendedor depois do prazo limite. Vendedores de SP respondem por 76,5% dos atrasos; maior vendedor: 88460e8e (10,6%). Nota média 2,0 nos atrasados contra 3,7 nos demais. Categoria mais afetada: Cama Mesa Banho (16,5%).",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "A hipótese foi gerada por IA a partir das evidências e precisa da sua validação. Origem do texto: Gerada.",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Abrir a Central de Anomalias",
+      "url": "https://app.powerbi.com/"
+    }
+  ]
+}

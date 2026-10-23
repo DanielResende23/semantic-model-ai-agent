@@ -1,0 +1,25 @@
+<!-- Corpo do e-mail "Email_ao_responsavel". Expressões @{...} do Power Automate; só HTML e CSS inline, que o Outlook respeita. -->
+<div style="font-family:Segoe UI,Arial,sans-serif;max-width:640px;color:#1b2631">
+  <div style="background:#06111A;color:#ffffff;padding:20px 24px;border-radius:8px 8px 0 0">
+    <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#FF8A3D">Anomalia de perda · prioridade @{items('Para_cada_anomalia')?['[Prioridade]']}</div>
+    <div style="font-size:20px;font-weight:600;margin-top:6px">@{items('Para_cada_anomalia')?['[Monitor]']}: @{items('Para_cada_anomalia')?['[Segmento]']}</div>
+    <div style="font-size:13px;color:#B7C4CC;margin-top:4px">Semana de @{items('Para_cada_anomalia')?['[Semana]']} · @{items('Para_cada_anomalia')?['[Status]']}</div>
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #e3e8ec;border-top:0">
+    <tr>
+      <td style="padding:14px 24px"><div style="font-size:12px;color:#5d6d7e">Taxa na semana</div><div style="font-size:24px;font-weight:700;color:#C0392B">@{items('Para_cada_anomalia')?['[TaxaObservada]']}</div></td>
+      <td style="padding:14px 24px"><div style="font-size:12px;color:#5d6d7e">Padrão (8 semanas)</div><div style="font-size:24px;font-weight:700">@{items('Para_cada_anomalia')?['[LinhaBase]']}</div></td>
+      <td style="padding:14px 24px"><div style="font-size:12px;color:#5d6d7e">Impacto estimado</div><div style="font-size:24px;font-weight:700">@{items('Para_cada_anomalia')?['[Impacto]']}</div></td>
+    </tr>
+  </table>
+  <div style="border:1px solid #e3e8ec;border-top:0;padding:16px 24px;border-radius:0 0 8px 8px">
+    <p style="margin:0 0 12px">@{items('Para_cada_anomalia')?['[Fator]']} · sinal principal: <b>@{items('Para_cada_anomalia')?['[SinalPrincipal]']}</b></p>
+    <p style="margin:0;font-weight:600">Hipótese provável (IA, confiança @{items('Para_cada_anomalia')?['[Confianca]']})</p>
+    <p style="margin:4px 0 12px">@{items('Para_cada_anomalia')?['[Hipotese]']}</p>
+    <p style="margin:0;font-weight:600">Ação recomendada</p>
+    <p style="margin:4px 0 12px">@{items('Para_cada_anomalia')?['[Acao]']}</p>
+    <p style="margin:0 0 12px;font-size:12px;color:#5d6d7e">Evidências: @{items('Para_cada_anomalia')?['[Evidencias]']}</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#5d6d7e">A hipótese foi gerada por IA a partir das evidências e precisa da sua validação. Origem do texto: @{items('Para_cada_anomalia')?['[OrigemHipotese]']}.</p>
+    <a href="@{parameters('UrlCentralAnomalias')}" style="display:inline-block;background:#FF8A3D;color:#06111A;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:6px">Abrir a Central de Anomalias</a>
+  </div>
+</div>

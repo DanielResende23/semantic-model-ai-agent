@@ -1,0 +1,6 @@
+/// Direct Lake on OneLake: endereço do lh_ai, que expõe a Gold do projeto Lakehouse Medallion por shortcuts (commercial, shared) e grava as anomalias em loss. Os IDs abaixo são de exemplo; o notebook nb_ai_refresh_semantic_model reaponta para o lh_ai do workspace.
+expression OneLake_AI =
+		let
+		    Fonte = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/3c2f8a51-6d0e-4b7a-9f14-2e5b8c7d1a90/6a1d4e8b-2f37-4c95-b0e6-81d93a7c5f24", [HierarchicalNavigation = true])
+		in
+		    Fonte

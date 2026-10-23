@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_evaluate_data_agent",
+    "description": "Avalia o Data Agent contra o banco de perguntas com resposta esperada e aplica portão de acurácia."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f413002b-ee19-4068-adfc-f451daa1f803"
+  }
+}

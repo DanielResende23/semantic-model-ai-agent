@@ -1,0 +1,108 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "Container",
+      "style": "attention",
+      "bleed": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Anomalia de perda · prioridade @{items('Para_cada_anomalia')?['[Prioridade]']}",
+          "weight": "Bolder",
+          "size": "Medium",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "@{items('Para_cada_anomalia')?['[Monitor]']} · @{items('Para_cada_anomalia')?['[Segmento]']} · semana de @{items('Para_cada_anomalia')?['[Semana]']} · @{items('Para_cada_anomalia')?['[Status]']}",
+          "spacing": "None",
+          "isSubtle": true,
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            { "type": "TextBlock", "text": "Taxa na semana", "isSubtle": true, "size": "Small" },
+            { "type": "TextBlock", "text": "@{items('Para_cada_anomalia')?['[TaxaObservada]']}", "size": "ExtraLarge", "weight": "Bolder", "color": "Attention", "spacing": "None" }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            { "type": "TextBlock", "text": "Padrão (8 semanas)", "isSubtle": true, "size": "Small" },
+            { "type": "TextBlock", "text": "@{items('Para_cada_anomalia')?['[LinhaBase]']}", "size": "ExtraLarge", "weight": "Bolder", "spacing": "None" }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            { "type": "TextBlock", "text": "Impacto estimado", "isSubtle": true, "size": "Small" },
+            { "type": "TextBlock", "text": "@{items('Para_cada_anomalia')?['[Impacto]']}", "size": "ExtraLarge", "weight": "Bolder", "spacing": "None" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "@{items('Para_cada_anomalia')?['[Fator]']} · sinal principal: **@{items('Para_cada_anomalia')?['[SinalPrincipal]']}**",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Hipótese provável (IA, confiança @{items('Para_cada_anomalia')?['[Confianca]']})",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "@{items('Para_cada_anomalia')?['[Hipotese]']}",
+      "wrap": true,
+      "spacing": "None"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Ação recomendada",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "@{items('Para_cada_anomalia')?['[Acao]']}",
+      "wrap": true,
+      "spacing": "None"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Evidências: @{items('Para_cada_anomalia')?['[Evidencias]']}",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "A hipótese foi gerada por IA a partir das evidências e precisa da sua validação. Origem do texto: @{items('Para_cada_anomalia')?['[OrigemHipotese]']}.",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Abrir a Central de Anomalias",
+      "url": "@{parameters('UrlCentralAnomalias')}"
+    }
+  ]
+}

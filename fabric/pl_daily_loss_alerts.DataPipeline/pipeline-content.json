@@ -1,0 +1,109 @@
+{
+  "properties": {
+    "description": "Detecta anomalias de perda, gera hipótese e ação com IA e faz o framing do modelo. Roda depois do pl_daily_load_olist do projeto 1; o Power Automate lê as anomalias pendentes e avisa os responsáveis.",
+    "parameters": {
+      "as_of_date": {
+        "type": "string",
+        "defaultValue": ""
+      }
+    },
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "5ed0b6c6-d92d-4389-83fd-76d1ea56805a",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "batch_id": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "as_of_date": {
+              "value": {
+                "value": "@pipeline().parameters.as_of_date",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.01:00:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Detectar anomalias",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "f3d0b115-6805-473b-beb1-5cddb21385af",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "batch_id": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 120,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Explicar com IA",
+        "dependsOn": [
+          {
+            "activity": "Detectar anomalias",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "e52e58ad-1a5b-4a34-b92b-4f5818b6bd54",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "batch_id": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Modelo - Rebind e framing",
+        "dependsOn": [
+          {
+            "activity": "Explicar com IA",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

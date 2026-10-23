@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Olist Prevenção de Perdas",
+    "description": "Relatório fino com a visão de perdas do projeto 1 e a Central de Anomalias: fila priorizada com hipótese de causa, ação recomendada e responsável."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c1079a1a-7eb8-401e-b936-df466dcdee9a"
+  }
+}

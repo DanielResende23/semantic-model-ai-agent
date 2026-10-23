@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_utils",
+    "description": "Funções compartilhadas da camada de IA: caminhos OneLake, escrita Delta, eventos por item e run log."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "eb63f775-80d0-4e10-92f9-39dd6ea338cf"
+  }
+}

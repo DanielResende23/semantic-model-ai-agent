@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_explain_anomalies",
+    "description": "Hipótese de causa e ação recomendada com Fabric AI functions, com validação e texto por regra de reserva."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f3d0b115-6805-473b-beb1-5cddb21385af"
+  }
+}

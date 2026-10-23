@@ -1,0 +1,168 @@
+cultureInfo en-US
+	translations
+		model Model
+			table Calendário
+				caption: Calendar
+			table Cliente
+				caption: Customer
+			table Vendedor
+				caption: Seller
+			table Produto
+				caption: Product
+			table 'Status do Pedido'
+				caption: Order Status
+			table 'Forma de Pagamento'
+				caption: Payment Type
+			table Vendas
+				caption: Sales
+				measure 'Receita Bruta'
+					caption: Gross Revenue
+					description: Product value plus freight for all order items, in BRL, regardless of order status (GMV).
+				measure 'Receita de Produtos'
+					caption: Product Revenue
+				measure 'Receita de Frete'
+					caption: Freight Revenue
+				measure 'Receita Realizada'
+					caption: Realized Revenue
+					description: Gross Revenue excluding lost orders (canceled or unavailable), in BRL.
+				measure 'Qtd Itens Vendidos'
+					caption: Items Sold
+				measure 'Ticket Médio'
+					caption: Average Order Value
+				measure 'Receita Perdida'
+					caption: Lost Revenue
+					description: Gross Revenue of lost orders (canceled or unavailable), in BRL. Main loss KPI.
+				measure 'Receita com Entrega Atrasada'
+					caption: Late Delivery Revenue
+				measure '% Receita Perdida'
+					caption: % Lost Revenue
+				measure '% Frete sobre Produtos'
+					caption: % Freight over Product
+				measure '% Itens Atrasados'
+					caption: % Late Items
+				measure 'Receita Bruta AA'
+					caption: Gross Revenue PY
+				measure 'Receita Bruta Δ% AA'
+					caption: Gross Revenue Δ% PY
+				measure 'Receita Bruta MA'
+					caption: Gross Revenue PM
+				measure 'Receita Bruta Δ% MA'
+					caption: Gross Revenue Δ% PM
+				measure 'Receita Bruta YTD'
+					caption: Gross Revenue YTD
+				measure 'Receita Perdida AA'
+					caption: Lost Revenue PY
+			table Pedidos
+				caption: Orders
+				measure 'Qtd Pedidos'
+					caption: Orders Count
+				measure 'Qtd Clientes'
+					caption: Unique Customers
+				measure 'Pedidos Entregues'
+					caption: Delivered Orders
+				measure 'Pedidos Perdidos'
+					caption: Lost Orders
+				measure 'Pedidos Atrasados'
+					caption: Late Orders
+				measure 'Atraso Médio (dias)'
+					caption: Average Delay (days)
+				measure 'Prazo Médio de Entrega (dias)'
+					caption: Average Delivery Time (days)
+				measure 'Nota Média de Avaliação'
+					caption: Average Review Score
+				measure 'Nota Média - Entrega no Prazo'
+					caption: Average Review Score - On Time
+				measure 'Nota Média - Entrega Atrasada'
+					caption: Average Review Score - Late
+				measure 'Pedidos Avaliados'
+					caption: Reviewed Orders
+				measure 'Avaliações Negativas'
+					caption: Negative Reviews
+				measure '% Pedidos Perdidos'
+					caption: % Lost Orders
+				measure '% Pedidos Atrasados'
+					caption: % Late Orders
+					description: Share of delivered orders that arrived after the estimated delivery date. Main service level KPI.
+				measure '% Avaliações Negativas'
+					caption: % Negative Reviews
+				measure 'Qtd Pedidos AA'
+					caption: Orders Count PY
+				measure 'Qtd Pedidos Δ% AA'
+					caption: Orders Count Δ% PY
+				measure 'Pedidos Entregues por Data de Entrega'
+					caption: Delivered Orders by Delivery Date
+			table Pagamentos
+				caption: Payments
+				measure 'Valor Pago'
+					caption: Amount Paid
+				measure 'Qtd Pagamentos'
+					caption: Payments Count
+				measure 'Parcelas Médias'
+					caption: Average Installments
+				measure '% Pago com Cartão de Crédito'
+					caption: % Paid by Credit Card
+			table 'Anomalias de Perda'
+				caption: Loss Anomalies
+				description: One row per loss anomaly: monitor + segment + week whose rate broke the pattern of the previous 8 weeks, with BRL impact, priority, owner and AI-generated root-cause hypothesis.
+				measure 'Qtd Anomalias'
+					caption: Anomaly Count
+				measure 'Anomalias de Alta Prioridade'
+					caption: High Priority Anomalies
+				measure 'Anomalias Novas'
+					caption: New Anomalies
+				measure 'Impacto Estimado das Anomalias'
+					caption: Estimated Anomaly Impact
+					description: Loss above the baseline summed over anomalies, in BRL: (observed rate - baseline) x weekly gross value. An estimate, not an accounting loss.
+				measure 'Fator Médio sobre o Padrão'
+					caption: Average Factor over Baseline
+				measure '% Anomalias com Hipótese'
+					caption: % Anomalies with Hypothesis
+				measure 'Última Semana com Anomalia'
+					caption: Latest Anomaly Week
+				column 'Código da Anomalia'
+					caption: Anomaly ID
+				column Monitor
+					caption: Monitor
+				column 'Tipo de Perda'
+					caption: Loss Type
+				column Dimensão
+					caption: Dimension
+				column Segmento
+					caption: Segment
+				column Semana
+					caption: Week
+				column 'Itens na Semana'
+					caption: Items in Week
+				column 'Itens com Perda'
+					caption: Items with Loss
+				column 'Taxa Observada'
+					caption: Observed Rate
+				column 'Linha de Base'
+					caption: Baseline
+				column 'Fator sobre o Padrão'
+					caption: Factor over Baseline
+				column 'Escore Robusto'
+					caption: Robust Score
+				column Prioridade
+					caption: Priority
+				column 'Sinal Principal'
+					caption: Main Signal
+				column Evidências
+					caption: Evidence
+				column 'Hipótese de Causa'
+					caption: Root-Cause Hypothesis
+				column 'Ação Recomendada'
+					caption: Recommended Action
+				column 'Confiança da Hipótese'
+					caption: Hypothesis Confidence
+				column 'Status da Hipótese'
+					caption: Hypothesis Status
+				column 'Área Responsável'
+					caption: Owner Area
+				column Responsável
+					caption: Owner
+				column 'Status da Anomalia'
+					caption: Anomaly Status
+				column 'Detectada em'
+					caption: Detected At
+

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "lh_ai",
+    "description": "Camada de IA: shortcuts para a Gold e a Silver do projeto Lakehouse Medallion e o schema loss com monitores, anomalias e hipóteses."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f3b172d5-4ede-4ccd-afc4-ee6fdbad7e01"
+  }
+}

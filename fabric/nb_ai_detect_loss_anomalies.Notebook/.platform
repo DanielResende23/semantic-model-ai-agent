@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ai_detect_loss_anomalies",
+    "description": "Monitores de perda semanais: linha de base robusta, anomalias, evidências, prioridade e responsável."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5ed0b6c6-d92d-4389-83fd-76d1ea56805a"
+  }
+}

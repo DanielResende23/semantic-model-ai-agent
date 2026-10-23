@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "description": "Alerta de anomalia de perda: todo dia às 07:30, consulta o modelo Olist Prevenção de Perdas e avisa cada responsável no Teams e por e-mail com a anomalia, a hipótese de causa gerada por IA e a ação recomendada.",
+  "parameters": {
+    "$connections": { "defaultValue": {}, "type": "Object" },
+    "$authentication": { "defaultValue": {}, "type": "SecureObject" },
+    "WorkspaceId": { "type": "String", "defaultValue": "<id do workspace Olist - Prevenção de Perdas>" },
+    "DatasetId": { "type": "String", "defaultValue": "<id do modelo Olist Prevenção de Perdas>" },
+    "UrlCentralAnomalias": { "type": "String", "defaultValue": "<link da página Central de Anomalias>" },
+    "DestinatarioTeste": { "type": "String", "defaultValue": "" }
+  },
+  "triggers": {
+    "Recorrencia_diaria": {
+      "type": "Recurrence",
+      "recurrence": {
+        "frequency": "Day",
+        "interval": 1,
+        "timeZone": "E. South America Standard Time",
+        "schedule": { "hours": [7], "minutes": [30] }
+      }
+    }
+  },
+  "actions": {
+    "Consultar_anomalias_pendentes": {
+      "type": "OpenApiConnection",
+      "runAfter": {},
+      "inputs": {
+        "host": {
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_powerbi",
+          "connectionName": "shared_powerbi",
+          "operationId": "ExecuteDatasetQuery"
+        },
+        "parameters": {
+          "workspaceType": "@parameters('WorkspaceId')",
+          "datasetId": "@parameters('DatasetId')",
+          "queryRequest/queries/0/query": "<conteúdo de query-pending-anomalies.dax>",
+          "queryRequest/serializerSettings/includeNulls": true
+        },
+        "authentication": "@parameters('$authentication')"
+      }
+    },
+    "Para_cada_anomalia": {
+      "type": "Foreach",
+      "runAfter": { "Consultar_anomalias_pendentes": ["Succeeded"] },
+      "foreach": "@outputs('Consultar_anomalias_pendentes')?['body/firstTableRows']",
+      "runtimeConfiguration": { "concurrency": { "repetitions": 1 } },
+      "actions": {
+        "Destinatario": {
+          "type": "Compose",
+          "inputs": "@if(empty(parameters('DestinatarioTeste')), items('Para_cada_anomalia')?['[EmailResponsavel]'], parameters('DestinatarioTeste'))"
+        },
+        "Card_no_Teams": {
+          "type": "OpenApiConnection",
+          "runAfter": { "Destinatario": ["Succeeded"] },
+          "inputs": {
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+              "connectionName": "shared_teams",
+              "operationId": "PostCardToConversation"
+            },
+            "parameters": {
+              "poster": "Flow bot",
+              "location": "Chat with Flow bot",
+              "body/recipient": "@outputs('Destinatario')",
+              "body/messageBody": "<conteúdo de adaptive-card.json>"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Email_ao_responsavel": {
+          "type": "OpenApiConnection",
+          "runAfter": { "Destinatario": ["Succeeded"] },
+          "inputs": {
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+              "connectionName": "shared_office365",
+              "operationId": "SendEmailV2"
+            },
+            "parameters": {
+              "emailMessage/To": "@outputs('Destinatario')",
+              "emailMessage/Subject": "[@{items('Para_cada_anomalia')?['[Prioridade]']}] Anomalia de perda: @{items('Para_cada_anomalia')?['[Monitor]']} · @{items('Para_cada_anomalia')?['[Segmento]']} · semana de @{items('Para_cada_anomalia')?['[Semana]']}",
+              "emailMessage/Body": "<conteúdo de email-template.html>",
+              "emailMessage/Importance": "@{if(equals(items('Para_cada_anomalia')?['[Prioridade]'], 'Alta'), 'High', 'Normal')}"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      }
+    },
+    "Registrar_envios": {
+      "type": "Compose",
+      "runAfter": { "Para_cada_anomalia": ["Succeeded"] },
+      "inputs": {
+        "alertas_enviados": "@length(outputs('Consultar_anomalias_pendentes')?['body/firstTableRows'])",
+        "destinatario_teste": "@parameters('DestinatarioTeste')"
+      }
+    }
+  },
+  "outputs": {}
+}
